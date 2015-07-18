@@ -1,5 +1,8 @@
+################################################################################
 FROM eriknelson/archlinux
 MAINTAINER eriknelson <io@eriknelson.me>
+# NOTE: Forked from upstream: https://registry.hub.docker.com/u/l3iggs/lamp
+################################################################################
 
 RUN pacman -Syy
 
