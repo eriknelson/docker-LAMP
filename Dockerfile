@@ -1,13 +1,10 @@
-FROM l3iggs/archlinux
-MAINTAINER l3iggs <l3iggs@live.com>
+FROM eriknelson/archlinux
+MAINTAINER eriknelson <io@eriknelson.me>
 
-# upldate package list
-RUN pacman -Sy
+RUN pacman -Syy
 
 # install apache
 RUN pacman -S --noconfirm --needed apache
-# this folder is normally created by the systemd apache service which we won't be using
-RUN mkdir /run/httpd
 RUN sed -i '$a ServerName ${HOSTNAME}' /etc/httpd/conf/httpd.conf
 
 # install php
@@ -84,7 +81,7 @@ RUN sed -i 's,;extension=pdo_sqlite.so,extension=pdo_sqlite.so,g' /etc/php/php.i
 
 # for mariadb (mysql) database
 # here is a hack to prevent an error during install because of missing systemd
-RUN ln -s /usr/bin/true /usr/bin/systemd-tmpfiles
+RUN ln -sf /usr/bin/true /usr/bin/systemd-tmpfiles
 RUN pacman -S --noconfirm --needed mariadb
 RUN rm /usr/bin/systemd-tmpfiles
 RUN pacman -S --noconfirm --needed perl-dbd-mysql
